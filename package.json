@@ -2,7 +2,7 @@
   "name": "vscode-httpyac",
   "displayName": "httpYac - Rest Client",
   "license": "MIT",
-  "publisher": "anweber",
+  "publisher": "Hanseatische-Entwicklungseinheit",
   "description": "Quickly and easily send REST, Soap, GraphQL, GRPC, MQTT, RabbitMQ and WebSocket requests directly within Visual Studio Code",
   "version": "6.16.7",
   "homepage": "https://github.com/Hanseatische-Entwicklungseinheit/vscode-httpyac",
