@@ -1376,6 +1376,11 @@
           "group": "navigation"
         },
         {
+          "command": "httpyac.toggleSortEnvironments",
+          "when": "view == httpyacEnvironments",
+          "group": "navigation"
+        },
+        {
           "command": "httpyac.toggleSortVariables",
           "when": "view == httpyacVariables",
           "group": "navigation"
@@ -1393,24 +1398,19 @@
           "group": "inline"
         },
         {
-          "command": "httpyac.toggleSortEnvironments",
+          "command": "httpyac.select-env",
           "when": "view == httpyacEnvironments && viewItem == 'env'",
-          "group": "inline@1"
+          "group": "inline"
         },
         {
           "command": "httpyac.copyToClipboard",
           "when": "view == httpyacVariables",
-          "group": "inline@2"
+          "group": "inline"
         },
         {
           "command": "httpyac.copyToClipboard",
           "when": "view == httpyacEnvironments",
-          "group": "inline@2"
-        },
-        {
-          "command": "httpyac.select-env",
-          "when": "view == httpyacEnvironments && viewItem == 'env'",
-          "group": "inline@3"
+          "group": "inline"
         }
       ]
     },
