@@ -1145,6 +1145,18 @@
         "icon": "$(clear-all)"
       },
       {
+        "command": "httpyac.toggleSortEnvironments",
+        "title": "Toggle Sort",
+        "category": "httpYac",
+        "icon": "$(sort-precedence)"
+      },
+      {
+        "command": "httpyac.toggleSortVariables",
+        "title": "Toggle Sort",
+        "category": "httpYac",
+        "icon": "$(sort-precedence)"
+      },
+      {
         "command": "httpyac.logout",
         "title": "Logout User Sessions",
         "category": "httpYac"
@@ -1183,7 +1195,7 @@
         "command": "httpyac.copyToClipboard",
         "title": "Copy Value",
         "category": "httpYac",
-        "icon": "$(clippy)"
+        "icon": "$(copy)"
       },
       {
         "command": "httpyac.resetOutputChannel",
@@ -1362,6 +1374,11 @@
           "command": "httpyac.reset",
           "when": "view == httpyacVariables || view == httpyacSession",
           "group": "navigation"
+        },
+        {
+          "command": "httpyac.toggleSortVariables",
+          "when": "view == httpyacVariables",
+          "group": "navigation"
         }
       ],
       "view/item/context": [
@@ -1376,19 +1393,24 @@
           "group": "inline"
         },
         {
-          "command": "httpyac.select-env",
+          "command": "httpyac.toggleSortEnvironments",
           "when": "view == httpyacEnvironments && viewItem == 'env'",
-          "group": "inline"
+          "group": "inline@1"
         },
         {
           "command": "httpyac.copyToClipboard",
           "when": "view == httpyacVariables",
-          "group": "inline"
+          "group": "inline@2"
         },
         {
           "command": "httpyac.copyToClipboard",
           "when": "view == httpyacEnvironments",
-          "group": "inline"
+          "group": "inline@2"
+        },
+        {
+          "command": "httpyac.select-env",
+          "when": "view == httpyacEnvironments && viewItem == 'env'",
+          "group": "inline@3"
         }
       ]
     },

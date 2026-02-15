@@ -11,7 +11,7 @@ export function isObjectItem(obj: unknown): obj is ObjectItem {
   return !!val?.key;
 }
 
-export function toObjectItems(val: unknown): Array<ObjectItem> | undefined {
+export function toObjectItems(val: unknown, sorted = false): Array<ObjectItem> | undefined {
   let result: Array<ObjectItem> | undefined;
   if (val) {
     if (typeof val === 'object') {
@@ -23,6 +23,9 @@ export function toObjectItems(val: unknown): Array<ObjectItem> | undefined {
         value,
       }));
     }
+  }
+  if (sorted && result) {
+    result.sort((a, b) => a.key.localeCompare(b.key));
   }
   return result?.filter(obj => ['function', 'undefined'].indexOf(typeof obj.value) < 0);
 }

@@ -3,7 +3,7 @@ import { DisposeProvider } from '../utils';
 import { DocumentStore } from '../documentStore';
 import * as httpyac from 'httpyac';
 import { getEnvironmentConfig } from '../config';
-import { ObjectItem, ObjectTreeItem } from './objectTreeItem';
+import { ObjectItem, ObjectTreeItem, toObjectItems } from './objectTreeItem';
 import { NoEnvironment } from './storeController';
 
 export const ProcessEnvironment = 'process.env';
@@ -15,6 +15,7 @@ export class EnvironmentTreeDataProvider
   readonly onDidChangeTreeData: vscode.Event<void>;
 
   #environmentChangedEmitter: vscode.EventEmitter<void>;
+  #sorted = false;
   constructor(
     readonly documentStore: DocumentStore,
     environmentChanged: vscode.Event<string[] | undefined>
@@ -26,7 +27,13 @@ export class EnvironmentTreeDataProvider
     const fireVariablesChanged = () => this.#environmentChangedEmitter.fire();
     documentStore.documentStoreChanged(fireVariablesChanged);
     environmentChanged(fireVariablesChanged);
-    this.subscriptions = [vscode.window.registerTreeDataProvider('httpyacEnvironments', this)];
+    this.subscriptions = [
+      vscode.window.registerTreeDataProvider('httpyacEnvironments', this),
+      vscode.commands.registerCommand('httpyac.toggleSortEnvironments', () => {
+        this.#sorted = !this.#sorted;
+        this.#environmentChangedEmitter.fire();
+      }),
+    ];
   }
 
   getTreeItem(element: string | ObjectItem): vscode.TreeItem {
@@ -53,17 +60,7 @@ export class EnvironmentTreeDataProvider
       }
     } else {
       const val = await this.getChildrenOfItem(element);
-      if (val) {
-        if (typeof val === 'object') {
-          return Object.entries(val).map(([key, value]) => ({ key, value }));
-        }
-        if (Array.isArray(val)) {
-          return val.map((value, index) => ({
-            key: `${index}`,
-            value,
-          }));
-        }
-      }
+      return toObjectItems(val, this.#sorted);
     }
     return undefined;
   }

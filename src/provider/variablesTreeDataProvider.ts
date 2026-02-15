@@ -9,6 +9,7 @@ export class VariablesTreeDataProvider extends DisposeProvider implements vscode
   readonly onDidChangeTreeData: vscode.Event<void>;
 
   variablesChangedEmitter: vscode.EventEmitter<void>;
+  #sorted = false;
   constructor(
     readonly documentStore: DocumentStore,
     environmentChanged: vscode.Event<string[] | undefined>
@@ -24,6 +25,10 @@ export class VariablesTreeDataProvider extends DisposeProvider implements vscode
       vscode.window.registerTreeDataProvider('httpyacVariables', this),
 
       vscode.commands.registerCommand('httpyac.copyToClipboard', this.copyToClipboard, this),
+      vscode.commands.registerCommand('httpyac.toggleSortVariables', () => {
+        this.#sorted = !this.#sorted;
+        this.variablesChangedEmitter.fire();
+      }),
     ];
   }
 
@@ -49,6 +54,6 @@ export class VariablesTreeDataProvider extends DisposeProvider implements vscode
         });
       }
     }
-    return toObjectItems(val);
+    return toObjectItems(val, this.#sorted);
   }
 }
